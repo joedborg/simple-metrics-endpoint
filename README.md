@@ -1,4 +1,4 @@
-# simple-metrics-server
+# simple-metrics-server
 
 A simple HTTP server for testing Flagger, Prometheus etc.
 
