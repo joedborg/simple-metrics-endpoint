@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-metrics-endpoint
+  labels:
+    name: simple-metrics-endpoint
+    app: simple-metrics-endpoint
+    prometheus: k8s
+spec:
+  selector:
+    app: simple-metrics-endpoint
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: simple-metrics-endpoint
+  labels:
+    app: simple-metrics-endpoint
+    prometheus: k8s
+spec:
+  selector:
+    matchLabels:
+      app: simple-metrics-endpoint
+  podMetricsEndpoints:
+    - path: /metrics
+      port: http
+      scheme: http

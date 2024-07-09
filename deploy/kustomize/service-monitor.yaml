@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: simple-metrics-endpoint
+  labels:
+    app: simple-metrics-endpoint
+    prometheus: k8s
+spec:
+  endpoints:
+    - path: /metrics
+      interval: 5s
+      port: http
+      scheme: http
+  selector:
+    matchLabels:
+      name: simple-metrics-endpoint
+  namespaceSelector:
+    matchNames:
+      - test

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-metrics-endpoint
+  labels:
+    app: simple-metrics-endpoint
+    prometheus: k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-metrics-endpoint
+  template:
+    metadata:
+      labels:
+        app: simple-metrics-endpoint
+        prometheus: k8s
+    spec:
+      containers:
+        - name: simple-metrics-endpoint
+          image: docker.io/joedborg/simple-metrics-endpoint:0.1.1
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          livenessProbe:
+            httpGet:
+              path: "/health"
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: "/ready"
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 1

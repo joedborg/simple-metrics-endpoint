@@ -1,0 +1,22 @@
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: simple-metrics-endpoint-200
+spec:
+  provider:
+    type: prometheus
+    address: http://prometheus-k8s.monitoring:9090
+  query: |
+    sum(rate(axum_http_requests_total{job="test/simple-metrics-endpoint", status=~"2.*"}[1m]))
+
+---
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: simple-metrics-endpoint-500
+spec:
+  provider:
+    type: prometheus
+    address: http://prometheus-k8s.monitoring:9090
+  query: |
+    sum(rate(axum_http_requests_total{job="test/simple-metrics-endpoint", status=~"5.*"}[1m])) or vector(0)
